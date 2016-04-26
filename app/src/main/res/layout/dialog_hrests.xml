@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+    <!--
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:background="#ff80d8ff">  -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:background="#DCDCDC"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/titleHrest"
+            android:layout_height="32dp"
+            android:layout_width="match_parent"
+            android:text="@string/titulo_dialog"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:paddingTop="4dp"
+            android:background="#006400"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvService"
+            android:layout_below="@+id/tvService"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/service_xml"
+            android:singleLine="false"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+        <EditText
+            android:id="@+id/txtService"
+            android:layout_below="@+id/tvService"
+            android:layout_height="28dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/service_xml"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
+
+        <!--
+            <TextView
+                android:id="@+id/tvOperation"
+                android:layout_below="@+id/txtService"
+                android:layout_height="25dp"
+                android:layout_width="170dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/operation_xml"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:typeface="sans" />
+
+            <EditText
+                android:id="@+id/txtOperation"
+                android:layout_below="@+id/tvOperation"
+                android:layout_height="28dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:hint="@string/operation_xml"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@android:color/black"
+                android:paddingLeft="5dp"
+                android:paddingTop="1dp"
+                android:textSize="14dp"
+                android:paddingBottom="1dp"
+                android:typeface="sans"
+                android:layout_marginRight="20dp" />
+
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_below="@+id/txtOperation"
+                android:layout_height="25dp"
+                android:layout_width="170dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/address_xml"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:typeface="sans" />
+
+            <EditText
+                android:id="@+id/txtAddress"
+                android:layout_below="@+id/tvAddress"
+                android:layout_height="28dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:hint="@string/address_xml"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@android:color/black"
+                android:paddingLeft="5dp"
+                android:paddingTop="1dp"
+                android:textSize="14dp"
+                android:paddingBottom="1dp"
+                android:typeface="sans"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:id="@+id/tvMethod"
+                android:layout_below="@+id/txtAddress"
+                android:layout_height="25dp"
+                android:layout_width="170dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/method_xml"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:typeface="sans" />
+
+            <EditText
+                android:id="@+id/txtMethod"
+                android:layout_below="@+id/tvMethod"
+                android:layout_height="28dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:hint="@string/method_xml"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@android:color/black"
+                android:paddingLeft="5dp"
+                android:paddingTop="1dp"
+                android:textSize="14dp"
+                android:paddingBottom="1dp"
+                android:typeface="sans"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:id="@+id/tvInput"
+                android:layout_below="@+id/txtMethod"
+                android:layout_height="25dp"
+                android:layout_width="170dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/input_xml"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:typeface="sans" />
+
+            <EditText
+                android:id="@+id/txtInput"
+                android:layout_below="@+id/tvInput"
+                android:layout_height="28dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:hint="@string/input_xml"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@android:color/black"
+                android:paddingLeft="5dp"
+                android:paddingTop="1dp"
+                android:textSize="14dp"
+                android:paddingBottom="1dp"
+                android:typeface="sans"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:id="@+id/tvOutput"
+                android:layout_below="@+id/txtInput"
+                android:layout_height="25dp"
+                android:layout_width="170dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/output_xml"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:typeface="sans" />
+
+            <EditText
+                android:id="@+id/txtOutput"
+                android:layout_below="@+id/tvOutput"
+                android:layout_height="28dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:hint="@string/output_xml"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@android:color/black"
+                android:paddingLeft="5dp"
+                android:paddingTop="1dp"
+                android:textSize="14dp"
+                android:paddingBottom="1dp"
+                android:typeface="sans"
+                android:layout_marginRight="20dp" />  -->
+        <!--
+            <LinearLayout
+                android:id="@+id/linearLayoutBtns"
+                android:layout_below="@+id/txtPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp">
+                <Button
+                    android:id="@+id/btnLoginLL"
+                    android:layout_width="125dp"
+                    android:layout_height="35dp"
+                    android:textSize="14dp"
+                    android:text="Login"
+                    android:typeface="sans"
+                    android:background="#ff0986be"
+                    android:textColor="#ffffffff"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp" />
+                <Button
+                    android:id="@+id/btnClearLL"
+                    android:layout_width="125dp"
+                    android:layout_height="35dp"
+                    android:textSize="14dp"
+                    android:text="Cancel"
+                    android:typeface="sans"
+                    android:background="#ff0986be"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#ffffffff"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp" />
+
+            </LinearLayout>  -->
+    </LinearLayout>
+</ScrollView>

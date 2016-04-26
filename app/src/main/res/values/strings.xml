@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SWS Mobile</string>
+    <string name="action_settings">Settings</string>
+    <string name="painel_propriedades">Propriedades Semânticas</string>
+    <string name="editor_painel">Painel Editor</string>
+    <string name="search_url">Digite url do serviço</string>
+    <string name="titulo_dialog">hRESTS Insert</string>
+    <string name="service_xml">Service</string>
+    <string name="service_required">Por favor, informe nome do serviço</string>
+    <string name="domain_ontology_remote">Domain Ontology</string>
+
+    <!-- Descrição serviço -->
+    <string name="titulo_service">Service</string>
+    <string name="description_service">Descrição</string>
+    <string name="label_service">Label</string>
+
+    <!-- Descrição Addresss -->
+    <string name="titulo_address">Address</string>
+    <string name="titulo_address_obs">Descrição</string>
+
+
+    <!-- Operation-->
+    <string name="title_operation">Operation</string>
+    <string name="nome_operation">Nome da Operação</string>
+    <string name="tipo_operation">Tipo Operação</string>
+    <string name="input_operation">Input</string>
+    <string name="output_operation">Output</string>
+
+
+</resources>

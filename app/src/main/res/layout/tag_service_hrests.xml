@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:background="#DCDCDC"
+        android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/titleHrest"
+        android:layout_height="32dp"
+        android:layout_width="match_parent"
+        android:text="@string/titulo_service"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="4dp"
+        android:background="#006400"
+        android:typeface="sans"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+   <!-- Nome do serviço-->
+    <TextView
+        android:id="@+id/tvInsertService"
+        android:layout_below="@+id/tvInsertService"
+        android:layout_height="25dp"
+        android:layout_width="170dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/titulo_service"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:typeface="sans" />
+
+    <EditText
+        android:id="@+id/txtInsertService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_marginLeft="20dp"
+        android:text=""
+        android:textColorHint="@android:color/darker_gray"
+        android:textColor="@android:color/black"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:textSize="14dp"
+        android:paddingBottom="1dp"
+        android:typeface="sans"
+        android:layout_marginRight="20dp" />
+
+        <!--Label Service -->
+        <TextView
+            android:id="@+id/tvInsertServiceLabel"
+            android:layout_below="@+id/txtInsertService"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/label_service"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/txtInsertServiceLabel"
+            android:layout_below="@+id/tvInsertServiceLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
+
+        <!-- ************** -->
+
+
+        <!-- Descrição do serviço-->
+        <TextView
+            android:id="@+id/tvInsertServiceDescription"
+            android:layout_below="@+id/tvInsertServiceLabel"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/description_service"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/txtInsertDescriptionService"
+            android:layout_below="@+id/tvInsertServiceLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
+
+
+</LinearLayout>
+</ScrollView>

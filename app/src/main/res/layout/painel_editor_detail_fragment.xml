@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F8FF"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/editor_painel"
+        android:textSize="10sp"/>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <WebView
+        android:id="@+id/webView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+  </ScrollView>
+
+
+    <TextView
+        android:id="@+id/display_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SWS Editor Mobile"
+        android:textSize="40sp"/>
+
+</LinearLayout>

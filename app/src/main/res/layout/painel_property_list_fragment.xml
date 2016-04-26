@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/painel_propriedades"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/tvOntologyDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ontology Domain"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="8sp"/>
+
+    <Spinner android:id="@+id/ontology"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/gravarDocumento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gravar hRESTS" />
+
+    <ExpandableListView
+        android:id="@+id/exp_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+    </ExpandableListView>
+
+</LinearLayout>
+
+    <!--
+
+
+          <Button
+              android:id="@+id/android_btn_id"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Android" />
+
+          <Button
+              android:id="@+id/ios_btn_id"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="IOS" />
+      -->
