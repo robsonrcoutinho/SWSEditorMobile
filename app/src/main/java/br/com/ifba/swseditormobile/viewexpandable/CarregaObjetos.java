@@ -22,19 +22,19 @@ public class CarregaObjetos {
         ch2.setNomeChildGrupo("Address");
 
         ChildGrupo ch3 = new ChildGrupo();
-        ch3.setNomeChildGrupo("Method");
-
+        ch3.setNomeChildGrupo("Operation");
+        /*
         ChildGrupo ch4 = new ChildGrupo();
         ch4.setNomeChildGrupo("Input");
 
         ChildGrupo ch5 = new ChildGrupo();
-        ch5.setNomeChildGrupo("Output");
+        ch5.setNomeChildGrupo("Output"); */
 
         hRESTS.add(ch1);
         hRESTS.add(ch2);
         hRESTS.add(ch3);
-        hRESTS.add(ch4);
-        hRESTS.add(ch5);
+        /*hRESTS.add(ch4);
+        hRESTS.add(ch5);*/
 
 
         return hRESTS;

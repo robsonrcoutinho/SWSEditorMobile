@@ -62,7 +62,7 @@
             android:layout_below="@+id/txtInsertAddress"
             android:layout_height="25dp"
             android:layout_width="170dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:text="@string/titulo_address_obs"
             android:textColor="#000000"

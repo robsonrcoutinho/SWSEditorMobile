@@ -21,10 +21,14 @@
 
     <!-- Operation-->
     <string name="title_operation">Operation</string>
-    <string name="nome_operation">Nome da Operação</string>
-    <string name="tipo_operation">Tipo Operação</string>
+    <string name="nome_operation">Nome da Operação:</string>
+    <string name="tipo_operation">Tipo Operação:</string>
+    <string name="tipo_i_o_operation">Entrada / Saida</string>
+    <string name="operation_param">Parâmetro:</string>
+    <string name="formato_operation">Formato</string>
     <string name="input_operation">Input</string>
     <string name="output_operation">Output</string>
+    <string name="ambos_operation">Ambos</string>
 
 
 </resources>

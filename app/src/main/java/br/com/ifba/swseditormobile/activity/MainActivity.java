@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.support.v7.widget.SearchView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import br.com.ifba.swseditormobile.fragment.EditorDetailFragment;
@@ -37,6 +38,7 @@ import br.com.ifba.swseditormobile.fragment.FragmentServiceTag;
 import br.com.ifba.swseditormobile.fragment.IFragmentInteractionListener;
 import br.com.ifba.swseditormobile.fragment.PropertyListFragment;
 import br.com.ifba.swseditormobile.R;
+import br.com.ifba.swseditormobile.model.Operation;
 import br.com.ifba.swseditormobile.request.RequestOntology;
 import br.com.ifba.swseditormobile.model.ChildGrupo;
 import br.com.ifba.swseditormobile.model.Group;
@@ -69,9 +71,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private static String addressUrl;
     private static String addressObs;
 
-    private Button gravarBtn;
+    private ImageButton gravarHrestsBtn;
     private Spinner spinner;
     private TextView tvOntologyDescription;
+
+    /*Operation*/
+    private String tagNomeMetodo;
+    private String tagTipoMetodo;
+    private String tagParametroOperation;
+    private String tagInputDinamico;
+    private String  tagOutputDinamico;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        gravarBtn = (Button)findViewById(R.id.gravarDocumento);
-        gravarBtn.setVisibility(View.GONE);
+        gravarHrestsBtn = (ImageButton)findViewById(R.id.gravarDocumento);
+        gravarHrestsBtn.setVisibility(View.GONE);
 
         tvOntologyDescription = (TextView)findViewById(R.id.tvOntologyDescription);
         tvOntologyDescription.setVisibility(View.GONE);
@@ -130,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     public void carregaExpandable(final String serviceNomeTroca, final String labelServiceTroca,
                                   final String descriptionServiceTroca) {
-        gravarBtn.setVisibility(View.VISIBLE);
+        gravarHrestsBtn.setVisibility(View.VISIBLE);
+
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
         group = new Group();
@@ -164,19 +175,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         fragmentAddressTag.show(getFragmentManager(), "Address");
                         Log.d(TAG, "Testando PARAM ADRESS: " + addressUrl + addressObs);
                         break;
-                    case "Method":
-                        RequestOntology onto = new RequestOntology();
-                        onto.stringRequest();//vollyStringRequestForPost();//stringRequest();  //
-                        Log.d(TAG, "Switch entrou em: " + selecionado);
-                        break;
-                    case "Input":
-                        Log.d(TAG, "Switch entrou em: " + selecionado);
-
+                    case "Operation":
                         FragmentOperation operation = new FragmentOperation();
-                        operation.show(getFragmentManager(),"Operation");
-                        break;
-                    case "Output":
-                        Log.d(TAG, "Switch entrou em: " + selecionado);
+                        operation.recebeOperation(tagNomeMetodo, tagTipoMetodo, tagParametroOperation,
+                                tagInputDinamico, tagOutputDinamico);
+                        operation.show(getFragmentManager(), "Operation");
                         break;
 
                 }
@@ -184,6 +187,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
 
+
+        gravarHrestsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandList.setVisibility(View.GONE);
+                gravarHrestsBtn.setVisibility(View.GONE);
+                loadSpinner();
+
+
+            }
+        });
+        /*
         gravarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Log.d(TAG, html);
 
             }
-        });
+        });*/
 
     }
 
@@ -309,8 +324,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     public void onClick(DialogInterface dialog, int which) {
                         serviceString = etServiceHRests.getText().toString();
                         if (!TextUtils.isEmpty(serviceString)) {
-                            carregaExpandable(serviceString,null, null);
-                            loadSpinner();
+                            carregaExpandable(serviceString, null, null);
+
                         } else{
                            ToastManager.show(getBaseContext(), "Por favor, insira nome do serviço",  ToastManager.WARNING);
                         }
@@ -345,16 +360,32 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         addressObs = addressO;
     }
 
+
+    @Override
+    public void onFragmentInteractionOperation(String tagNomeMetodo, String tagTipoMetodo, String tagParametroOperation,
+                                               String tagInputDinamico,  String  tagOutputDinamico) {
+        this.tagNomeMetodo = tagNomeMetodo;
+        this.tagTipoMetodo =tagTipoMetodo;
+        this.tagParametroOperation = tagParametroOperation;
+        this.tagInputDinamico = tagInputDinamico;
+        this.tagOutputDinamico =tagOutputDinamico;
+    }
+
     public void loadSpinner(){
-        List<CharSequence> lista = new ArrayList<>();
-        lista.add("onto01");
-        lista.add("onto02");
+
+        List<String> lista = RequestOntology.stringRequest(); //new ArrayList<>();
+        lista.add("Selecione Ontologia...");
+        /* lista.add("onto02");
         lista.add("onto03");
         lista.add("onto04");
+        RequestOntology ro = new RequestOntology();
+
+        ro.stringRequest();*/
+        //ro.buscaOntologia();
 
         spinner.setVisibility(View.VISIBLE);
         tvOntologyDescription.setVisibility(View.VISIBLE);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,lista);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,lista);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 

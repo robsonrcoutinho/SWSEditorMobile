@@ -23,6 +23,7 @@ public class HTMLParser {
     private static String response;
     private static String service;
     private static String address;
+    private static  String operation;
 
 
 
@@ -42,12 +43,11 @@ public class HTMLParser {
                                             +"</html>";
 
 
-
-
     public static String  montaHTML(){
         html = html.concat(service);
         html = html.concat(meioHtml);
         html = html.concat(address);
+        html = html.concat(operation);
         html = html.concat(htmlFecha);
 
         Log.d("HTML:",html);
@@ -62,6 +62,11 @@ public class HTMLParser {
 
     public void recebeAddress(String tag){
        this.address = tag;
+
+    }
+
+    public void recebeOperation(String tag){
+        this.operation = tag;
 
     }
 }

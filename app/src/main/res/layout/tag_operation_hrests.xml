@@ -30,7 +30,7 @@
             android:layout_below="@+id/txtOperation"
             android:layout_height="25dp"
             android:layout_width="170dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:text="@string/nome_operation"
             android:textColor="#000000"
@@ -61,7 +61,7 @@
             android:layout_below="@+id/txtOperation"
             android:layout_height="25dp"
             android:layout_width="170dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:text="@string/tipo_operation"
             android:textColor="#000000"
@@ -90,30 +90,144 @@
 
         <TextView
             android:id="@+id/tvEntradaSaida"
-            android:layout_below="@+id/txtOperation"
+            android:layout_below="@+id/txtTipoOperation"
             android:layout_height="25dp"
             android:layout_width="170dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="7dp"
             android:layout_marginLeft="120dp"
-            android:text="@string/tipo_operation"
+            android:text="@string/tipo_i_o_operation"
             android:textColor="#000000"
             android:textSize="14dp"
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:typeface="sans" />
 
-        <RadioButton
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/input_operation"
+                    android:checked="true"
+                    />
+                <RadioButton
+                    android:id="@+id/radio_output"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/output_operation"
+
+                    
+                     />
+            <RadioButton
+                android:id="@+id/radio_ambos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ambos_operation"
+
+                />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvParamOperation"
+            android:layout_below="@+id/txtOperation"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/operation_param"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/txtParamOperation"
+            android:layout_below="@+id/tvOperationSaidaEntrada"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/input_operation"/>
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
 
-        <RadioButton
+        <!-- Dinâmico   -->
+
+
+        <TextView
+            android:id="@+id/tvOperationEntrada"
+            android:layout_below="@+id/txtOperation"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/input_operation"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/txtInputOperation"
+            android:layout_below="@+id/tvOperationEntrada"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/input_operation"/>
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
 
 
+        <TextView
+            android:id="@+id/tvOperationSaida"
+            android:layout_below="@+id/txtOperation"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/output_operation"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
 
+        <EditText
+            android:id="@+id/txtOutputOperation"
+            android:layout_below="@+id/tvOperationSaida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
 
     </LinearLayout>
 

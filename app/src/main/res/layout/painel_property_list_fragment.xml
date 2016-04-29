@@ -30,32 +30,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textStyle="bold" />
-    <Button
+
+
+    <ImageButton
         android:id="@+id/gravarDocumento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gravar hRESTS" />
+        android:drawingCacheQuality="high"
+        android:src="@drawable/save"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"/>
 
     <ExpandableListView
         android:id="@+id/exp_list"
+        android:layout_marginTop="14dp"
         android:layout_width="match_parent"
         android:layout_height="fill_parent" >
     </ExpandableListView>
 
 </LinearLayout>
-
-    <!--
-
-
-          <Button
-              android:id="@+id/android_btn_id"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Android" />
-
-          <Button
-              android:id="@+id/ios_btn_id"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="IOS" />
-      -->

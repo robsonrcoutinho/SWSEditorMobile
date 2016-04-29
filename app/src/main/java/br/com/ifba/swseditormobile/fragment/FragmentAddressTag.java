@@ -90,7 +90,7 @@ public class FragmentAddressTag extends DialogFragment {
         try {
             mListener = (IFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement FragmentInteractionListener");
+            throw new ClassCastException(activity.toString() + " IFragmentInteractionListener ");
         }
     }
 

@@ -9,9 +9,17 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,89 +35,24 @@ public class RequestOntology extends FragmentActivity {
 
     private void recebeConsulta(String palavraChave){
         REQUEST+=palavraChave;
-
-    }
-/*
-    public List<String> buscaOntologia(){
-        final List<String> listaURL = new ArrayList<>();
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("cat", "username");
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,REQUEST,
-                new Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Erro recebimento JSON hrests");
-                Log.d(TAG,error.toString());
-            }
-        })
-
-        {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String,String>();
-                headers.put("Accept","Application/json");
-                headers.put("Content-Type","application/x-www-form-urlencoded");
-               // headers.put("Content-Type", "application/json; charset=utf-8");
-                //headers.put("User-agent", System.getProperty("http.agent"));
-                return headers;
-         }
-
-
-
-        };
-
-        RequestWebApplication.getInstance().addToRequestQueue(jsonObjReq);
-       return listaURL;
     }
 
-
-    public void vollyStringRequestForPost() {
-        String a = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=cat+dog";
-        JsonArrayRequest req = new JsonArrayRequest(a,
-                new Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        String teste = response.toString();
-                        Log.d(TAG,teste);
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG,"Error:" + error.toString());
-
-
-            }
-        }){
-
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-        HashMap<String, String> headers = new HashMap<String,String>();
-        headers.put("Accept","Application/json");
-        headers.put("Content-Type","application/x-www-form-urlencoded");
-        return headers;
-            }
-        };
-        RequestWebApplication.getInstance().addToRequestQueue(req);
-    }
-
-*/
-
-    public void stringRequest() {
-        String a = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=teste";
+    public static List<String> stringRequest() {
+        final List<String> listaOnto = new ArrayList<>();
+        final String a = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=teste";
         StringRequest sr = new StringRequest(Request.Method.GET,a, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String teste = response.toString();
-                Log.d(TAG, teste);
+                String[] posicao = null;
+                for(int i = 1 ; i<response.length();i++) {
+                    posicao = response.split("http://");
+                    Log.d(TAG, "lenght ::" + response.length() +":");
+                }
+
+                for(int j = 0 ; j<posicao.length; j++){
+                    listaOnto.add(posicao[j].toString());
+                    Log.d(TAG, "Teste ::" + listaOnto.get(j) +":");
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -130,6 +73,7 @@ public class RequestOntology extends FragmentActivity {
             }
         };
         RequestWebApplication.getInstance().addToRequestQueue(sr);
+        return listaOnto;
     }
 
 
