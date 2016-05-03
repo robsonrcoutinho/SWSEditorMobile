@@ -22,9 +22,10 @@ public class FragmentServiceTag extends DialogFragment{
     private String tagNameService;
     private String tagLabelService;
     private String tagDescriptionService;
+    private String modelReference;
 
     private IFragmentInteractionListener mListener;
-
+    private EditText editModelReference;
     private EditText editService;
     private EditText editDescricaoService;
     private EditText editLabelService;
@@ -39,11 +40,12 @@ public class FragmentServiceTag extends DialogFragment{
     final String h1f = "</h1>";
 
 
-    public void recebeTagService(String tagNameService, String tagLabelService, String tagDescriptionService){
-        this.tagNameService = tagNameService;
+    public void recebeTagService(String modelReference, String tagNameService, String tagLabelService, String tagDescriptionService){
+        this.modelReference = modelReference;
         if(tagLabelService != null && tagDescriptionService != null ){
             this.tagLabelService = tagLabelService;
             this.tagDescriptionService = tagDescriptionService;
+            this.tagNameService = tagNameService;
             Log.d(TAG,"Entrou aqui::" + tagLabelService +tagDescriptionService);
         }else {
             Log.d(TAG, "Não entrou:  Null" + tagLabelService + "Null" + tagDescriptionService);
@@ -54,9 +56,15 @@ public class FragmentServiceTag extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.tag_service_hrests, null);
+
+        editModelReference = (EditText) view.findViewById(R.id.txtInsertModelReference);
         editService = (EditText) view.findViewById(R.id.txtInsertService);
         editLabelService = (EditText) view.findViewById(R.id.txtInsertServiceLabel);
         editDescricaoService= (EditText) view.findViewById(R.id.txtInsertDescriptionService);
+
+        editModelReference.setText(modelReference);
+        editModelReference.setInputType(InputType.TYPE_CLASS_TEXT);
+        editModelReference.requestFocus();
 
         editService.setText(tagNameService);
         editService.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -80,6 +88,7 @@ public class FragmentServiceTag extends DialogFragment{
         builder.setPositiveButton("Gravar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                modelReference = editModelReference.getText().toString();
                 tagNameService = editService.getText().toString();
                 tagLabelService = editLabelService.getText().toString();
                 tagDescriptionService = editDescricaoService.getText().toString();
@@ -93,7 +102,7 @@ public class FragmentServiceTag extends DialogFragment{
                 HTMLParser html = new HTMLParser();
                 html.recebeService(concatenaService);
 
-                mListener.onFragmentInteraction(tagNameService, tagLabelService, tagDescriptionService);
+                mListener.onFragmentInteraction(modelReference,tagNameService, tagLabelService, tagDescriptionService);
 
             }
         });

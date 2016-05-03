@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/linearlayout1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <TextView
+    android:id="@+id/tvOntologyDescription"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="ModelReference"
+    android:layout_gravity="center"
+    android:textStyle="bold"
+    android:layout_marginTop="8dp"
+    android:textSize="10sp"/>
+
+    <Spinner android:id="@+id/idModelReference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/idLowering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LoweringSchemaMapping"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textSize="10sp"/>
+
+    <Spinner android:id="@+id/idLoweringSchemaMapping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/idLifting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LiftingSchemaMapping"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textSize="10sp"/>
+
+    <Spinner android:id="@+id/idLiftingSchemaMapping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/voltarHrests"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Volta"/>
+
+        <Button
+            android:id="@+id/gravarOntologiasService"
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="Continua"/>
+
+    </LinearLayout>
+
+</LinearLayout>

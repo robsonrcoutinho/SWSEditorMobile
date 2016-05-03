@@ -11,6 +11,7 @@
 
     <!-- Descrição serviço -->
     <string name="titulo_service">Service</string>
+    <string name="titulo_service_model">ModelReference service</string>
     <string name="description_service">Descrição</string>
     <string name="label_service">Label</string>
 

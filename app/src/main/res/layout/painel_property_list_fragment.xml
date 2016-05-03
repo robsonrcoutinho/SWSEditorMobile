@@ -8,6 +8,7 @@
     android:padding="5dp" >
 
     <TextView
+        android:id="@+id/tvTitlePrincipalProperties"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/painel_propriedades"
@@ -15,37 +16,27 @@
         android:textStyle="bold"
         android:textSize="10sp"/>
 
-    <TextView
-        android:id="@+id/tvOntologyDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ontology Domain"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textSize="8sp"/>
+    <include layout="@layout/painel_property_spinner_1" />
+    <include layout="@layout/painel_property_spinner_2" />
+    <include layout="@layout/painel_property_spinner_3" />
 
-    <Spinner android:id="@+id/ontology"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textStyle="bold" />
-
-
-    <ImageButton
-        android:id="@+id/gravarDocumento"
-        android:drawingCacheQuality="high"
-        android:src="@drawable/save"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center"/>
+    <!--Acima -->
 
     <ExpandableListView
         android:id="@+id/exp_list"
+        android:layout_weight="1"
         android:layout_marginTop="14dp"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="match_parent" >
     </ExpandableListView>
+
+        <ImageButton
+            android:id="@+id/gravarDocumento"
+            android:drawingCacheQuality="high"
+            android:src="@drawable/save"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

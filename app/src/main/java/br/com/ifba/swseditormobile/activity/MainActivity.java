@@ -3,7 +3,6 @@ package br.com.ifba.swseditormobile.activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,8 +28,11 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.support.v7.widget.SearchView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import br.com.ifba.swseditormobile.fragment.EditorDetailFragment;
 import br.com.ifba.swseditormobile.fragment.FragmentAddressTag;
 import br.com.ifba.swseditormobile.fragment.FragmentOperation;
@@ -38,11 +40,9 @@ import br.com.ifba.swseditormobile.fragment.FragmentServiceTag;
 import br.com.ifba.swseditormobile.fragment.IFragmentInteractionListener;
 import br.com.ifba.swseditormobile.fragment.PropertyListFragment;
 import br.com.ifba.swseditormobile.R;
-import br.com.ifba.swseditormobile.model.Operation;
 import br.com.ifba.swseditormobile.request.RequestOntology;
 import br.com.ifba.swseditormobile.model.ChildGrupo;
 import br.com.ifba.swseditormobile.model.Group;
-import br.com.ifba.swseditormobile.util.HTMLParser;
 import br.com.ifba.swseditormobile.util.ToastManager;
 import br.com.ifba.swseditormobile.viewexpandable.CarregaObjetos;
 import br.com.ifba.swseditormobile.viewexpandable.ExpandableListAdapterView;
@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private WebView webview;
     private ProgressDialog progressDialog;
     private GestureDetector gestureDetector;
-
+    private TextView titlePrincipalProperties;
     private ExpandableListAdapterView expAdapter;
     private ExpandableListView expandList;
 
-    List<Group> listDataGroup;
-    HashMap<Group, List<ChildGrupo>> listDataChild;
-    private String serviceString;
+    private List<Group> listDataGroup;
+    private HashMap<Group, List<ChildGrupo>> listDataChild;
+    private String modelReference;
     private EditText etServiceHRests;
 
     private Group group;
@@ -71,9 +71,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private static String addressUrl;
     private static String addressObs;
 
-    private ImageButton gravarHrestsBtn;
-    private Spinner spinner;
-    private TextView tvOntologyDescription;
+    private ImageButton btnGravarHrests;
+    private Button btnGravarOntologiasService;
+    private Button btnVoltarHrests;
+
+    private Spinner spinnerModelService;
+    private Spinner spinnerLowering;
+    private Spinner spinnerLifting;
 
     /*Operation*/
     private String tagNomeMetodo;
@@ -81,7 +85,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private String tagParametroOperation;
     private String tagInputDinamico;
     private String  tagOutputDinamico;
+    private LinearLayout linearLayout01;
+    private LinearLayout linearLayout02;
+    private LinearLayout linearLayout03;
 
+    private  List<String> lista;
+    private RequestOntology ro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +98,31 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        ro = new RequestOntology();
+        lista = new ArrayList();
 
-        gravarHrestsBtn = (ImageButton)findViewById(R.id.gravarDocumento);
-        gravarHrestsBtn.setVisibility(View.GONE);
+        titlePrincipalProperties = (TextView) findViewById(R.id.tvTitlePrincipalProperties);
 
-        tvOntologyDescription = (TextView)findViewById(R.id.tvOntologyDescription);
-        tvOntologyDescription.setVisibility(View.GONE);
+        /*layout um*/
+        linearLayout01 = (LinearLayout) findViewById(R.id.linearlayout1);
+        linearLayout01.setVisibility(View.GONE);
 
-        spinner = (Spinner) findViewById(R.id.ontology);
-        spinner.setVisibility(View.GONE);
+        btnGravarOntologiasService = (Button)findViewById(R.id.gravarOntologiasService);
+        btnVoltarHrests = (Button)findViewById(R.id.voltarHrests);
+        spinnerModelService = (Spinner) findViewById(R.id.idModelReference);
+        spinnerLowering = (Spinner) findViewById(R.id.idLoweringSchemaMapping);
+        spinnerLifting = (Spinner) findViewById(R.id.idLiftingSchemaMapping);
+        /**/
+        /*layout 2*/
+        linearLayout02 = (LinearLayout) findViewById(R.id.linearlayout2);
+        linearLayout02.setVisibility(View.GONE);
+
+        /*layout 3*/
+        linearLayout03 = (LinearLayout) findViewById(R.id.linearlayout3);
+        linearLayout03.setVisibility(View.GONE);
+
+        btnGravarHrests = (ImageButton)findViewById(R.id.gravarDocumento);
+        btnGravarHrests.setVisibility(View.GONE);
 
         webview = (WebView) findViewById(R.id.webView2);
         webview.getSettings().setJavaScriptEnabled(true);
@@ -125,12 +150,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
-    }
-
-
-    @Override
     public void Message(String message) {
         EditorDetailFragment detailfragment = (EditorDetailFragment) getFragmentManager()
                 .findFragmentById(R.id.detail_Fragment);
@@ -138,10 +157,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             detailfragment.setText(message);
     }
 
-    public void carregaExpandable(final String serviceNomeTroca, final String labelServiceTroca,
+    public void carregaExpandable(final String modelReference,final String serviceNomeTroca, final String labelServiceTroca,
                                   final String descriptionServiceTroca) {
-        gravarHrestsBtn.setVisibility(View.VISIBLE);
-
+        btnGravarHrests.setVisibility(View.VISIBLE);
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
         group = new Group();
@@ -164,7 +182,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     case "Service":
                         Log.d(TAG, "Switch entrou em: " + selecionado);
                         FragmentServiceTag dialogFragment = new FragmentServiceTag();
-                        dialogFragment.recebeTagService(serviceNomeTroca, labelServiceTroca, descriptionServiceTroca);
+                        dialogFragment.recebeTagService(modelReference, serviceNomeTroca, labelServiceTroca,
+                                descriptionServiceTroca);
                         dialogFragment.show(getFragmentManager(), "Service");
 
                         break;
@@ -188,31 +207,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
 
 
-        gravarHrestsBtn.setOnClickListener(new View.OnClickListener() {
+        btnGravarHrests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 expandList.setVisibility(View.GONE);
-                gravarHrestsBtn.setVisibility(View.GONE);
-                loadSpinner();
-
-
+                btnGravarHrests.setVisibility(View.GONE);
+                ro.recebeConsulta(modelReference);
+                loadSpinnerService();
             }
         });
-        /*
-        gravarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HTMLParser htmlCom = new HTMLParser();
-                Bundle params = new Bundle();
-                String html = htmlCom.montaHTML();
-                params.putSerializable("html", html);
-                Intent intent = new Intent(MainActivity.this, RenderView.class);
-                intent.putExtras(params);
-                startActivity(intent);
-                Log.d(TAG, html);
-
-            }
-        });*/
 
     }
 
@@ -238,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
     }
-
 
     @Override
     public boolean onQueryTextChange(String url) {
@@ -306,12 +308,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             return true;
         }
         if (msg.what == CLICK_WV) {
-            showAlert();
+            showAlertService();
         }
         return true;
     }
 
-    public void showAlert() {
+    public void showAlertService() {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.dialog_hrests, null);
         etServiceHRests = (EditText) alertLayout.findViewById(R.id.txtService);
@@ -322,9 +324,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         alert.setPositiveButton("Gravar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        serviceString = etServiceHRests.getText().toString();
-                        if (!TextUtils.isEmpty(serviceString)) {
-                            carregaExpandable(serviceString, null, null);
+                        modelReference = etServiceHRests.getText().toString();
+                        if (!TextUtils.isEmpty(modelReference)) {
+                            carregaExpandable(modelReference,null, null, null);
 
                         } else{
                            ToastManager.show(getBaseContext(), "Por favor, insira nome do serviço",  ToastManager.WARNING);
@@ -349,9 +351,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
     @Override
-    public void onFragmentInteraction(String serviceName, String labelService,
+    public void onFragmentInteraction(String modelReference,String serviceName, String labelService,
                                       String descriptionService ) {
-        carregaExpandable(serviceName, labelService, descriptionService);
+        carregaExpandable(modelReference,serviceName, labelService, descriptionService);
     }
 
     @Override
@@ -371,27 +373,56 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         this.tagOutputDinamico =tagOutputDinamico;
     }
 
-    public void loadSpinner(){
+    public void loadSpinnerService(){
 
-        List<String> lista = RequestOntology.stringRequest(); //new ArrayList<>();
-        lista.add("Selecione Ontologia...");
-        /* lista.add("onto02");
-        lista.add("onto03");
-        lista.add("onto04");
-        RequestOntology ro = new RequestOntology();
+        linearLayout01.setVisibility(View.VISIBLE);
+        titlePrincipalProperties.setText("Service");
 
-        ro.stringRequest();*/
-        //ro.buscaOntologia();
+        if(lista.size() == 0) {
+            Log.d(TAG,"Adicionado.. ");
+            final ProgressDialog dialog =
+                    new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Buscando Ontologias... Aguarde...");
+            dialog.setIndeterminate(false);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
+            dialog.show();
 
-        spinner.setVisibility(View.VISIBLE);
-        tvOntologyDescription.setVisibility(View.VISIBLE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,lista);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+            Log.d(TAG,"Lista.. entrou em vazio");
+            lista = RequestOntology.requestOntoService();
+            lista.add("Selecione...");
+        }
 
-    }
+        Log.d(TAG, "Lista.. entrou em cheio");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.spinner_item, lista);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerModelService.setAdapter(adapter);
 
-}
+        ArrayAdapter<String> adapterLowering = new ArrayAdapter<>(this,R.layout.spinner_item, lista);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerLowering.setAdapter(adapterLowering);
+
+        ArrayAdapter<String> adapterLifting = new ArrayAdapter<>(this,R.layout.spinner_item, lista);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerLifting.setAdapter(adapterLifting);
+
+        btnVoltarHrests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandList.setVisibility(View.VISIBLE);
+                btnGravarHrests.setVisibility(View.VISIBLE);
+                linearLayout01.setVisibility(View.GONE);
+                ro.recebeConsulta("");
+                titlePrincipalProperties.setText("Propriedades Semânticas");
+
+            }
+        });
+        }
+
+
+
+        }
+
 
 
 

@@ -24,13 +24,46 @@
         android:textStyle="bold"
         android:gravity="center" />
 
-   <!-- Nome do serviço-->
+   <!-- modelReference-->
+
+        <TextView
+            android:id="@+id/tvInsertModelReference"
+            android:layout_below="@+id/tvInsertModelreference"
+            android:layout_height="25dp"
+            android:layout_width="170dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/titulo_service_model"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/txtInsertModelReference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:paddingLeft="5dp"
+            android:paddingTop="1dp"
+            android:textSize="14dp"
+            android:paddingBottom="1dp"
+            android:typeface="sans"
+            android:layout_marginRight="20dp" />
+
+
+        <!-- Nome do serviço-->
     <TextView
         android:id="@+id/tvInsertService"
         android:layout_below="@+id/tvInsertService"
         android:layout_height="25dp"
         android:layout_width="170dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:text="@string/titulo_service"
         android:textColor="#000000"
@@ -61,7 +94,7 @@
             android:layout_below="@+id/txtInsertService"
             android:layout_height="25dp"
             android:layout_width="170dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:text="@string/label_service"
             android:textColor="#000000"
@@ -96,7 +129,7 @@
             android:layout_below="@+id/tvInsertServiceLabel"
             android:layout_height="25dp"
             android:layout_width="170dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:text="@string/description_service"
             android:textColor="#000000"

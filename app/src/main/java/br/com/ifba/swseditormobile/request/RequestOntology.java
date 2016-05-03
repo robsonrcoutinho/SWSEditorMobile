@@ -1,8 +1,12 @@
 package br.com.ifba.swseditormobile.request;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,37 +26,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.ifba.swseditormobile.util.ToastManager;
+
 
 /**
  * Created by Robson on 12/04/2016.
  */
 public class RequestOntology extends FragmentActivity {
     private static final String TAG = RequestOntology.class.getSimpleName();
-    private static  String REQUEST = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=cat+dog";
-    private String jsonResponse;
-    private String urlJsonObj = "http://api.androidhive.info/volley/person_object.json";
+    private static String REQUEST = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=";
+    private static List<String> listaOnto = new ArrayList<>();
 
+    public void recebeConsulta(String palavraChave){
+        this.REQUEST+=palavraChave;
+        Log.d(TAG, "Consulta Recebida: " + REQUEST + "Param Recebido::" + palavraChave);
 
-    private void recebeConsulta(String palavraChave){
-        REQUEST+=palavraChave;
     }
 
-    public static List<String> stringRequest() {
-        final List<String> listaOnto = new ArrayList<>();
-        final String a = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=teste";
-        StringRequest sr = new StringRequest(Request.Method.GET,a, new Response.Listener<String>() {
+
+    public  static List<String> requestOntoService() {
+       // final String a = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=teste";
+        StringRequest sr = new StringRequest(Request.Method.GET,REQUEST, new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response) {
-                String[] posicao = null;
-                for(int i = 1 ; i<response.length();i++) {
-                    posicao = response.split("http://");
-                    Log.d(TAG, "lenght ::" + response.length() +":");
-                }
-
-                for(int j = 0 ; j<posicao.length; j++){
-                    listaOnto.add(posicao[j].toString());
-                    Log.d(TAG, "Teste ::" + listaOnto.get(j) +":");
-                }
+                if (!response.isEmpty()) {
+                    String[] posicao = null;
+                    for (int i = 1; i < response.length(); i++) {
+                        posicao = response.split("http://");
+                    }
+                    for (int j = 0; j < posicao.length; j++) {
+                        listaOnto.add(posicao[j].toString());
+                        Log.d(TAG, "Onto ::" + listaOnto.get(j) + ":");
+                    }
+                    REQUEST = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=";
+                }else{
+                    REQUEST = "http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=";
+                    }
 
             }
         }, new Response.ErrorListener() {
@@ -62,7 +72,8 @@ public class RequestOntology extends FragmentActivity {
                 Log.d(TAG, error.toString());
 
             }
-        }){
+        })
+        {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -75,7 +86,5 @@ public class RequestOntology extends FragmentActivity {
         RequestWebApplication.getInstance().addToRequestQueue(sr);
         return listaOnto;
     }
-
-
 
 }
