@@ -10,20 +10,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.com.ifba.swseditormobile.R;
-import br.com.ifba.swseditormobile.model.Operation;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 
 /**
@@ -45,6 +37,7 @@ public class FragmentOperation extends DialogFragment {
     private String  tagOutputDinamico;
 
     private   int op;
+    private int opLayout = 0;
     private static final String asp = "\"";
     private String concatenaOperation;
 
@@ -109,7 +102,6 @@ public class FragmentOperation extends DialogFragment {
         edParametro.requestFocus();
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
-        int teste = radioGroup.getCheckedRadioButtonId();
 
 
         radioAmbos = (RadioButton) view.findViewById(R.id.radio_ambos);
@@ -157,12 +149,7 @@ public class FragmentOperation extends DialogFragment {
                 }
             });
 
-
-
-
-        Log.d(TAG, "Valor: getCheckedRadioButtonId() "+String.valueOf(teste));
         Log.d(TAG, "Valor: marcado " + String.valueOf(op));
-
 
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -199,6 +186,7 @@ public class FragmentOperation extends DialogFragment {
                                     + "<br/>"
                                     +  "<span class=" + asp + "output" + asp + ">"
                                     + "<strong>Valor de Saida:</strong>" + tagOutputDinamico + "</span>";
+                    opLayout = 1;
                 }
 
                 concatenaOperation = "<div class=" + asp + "operation" + asp + "id=" + asp + "op1" + asp + ">"
@@ -207,7 +195,7 @@ public class FragmentOperation extends DialogFragment {
                         + selectRadioButton;
 
                 mListener.onFragmentInteractionOperation( tagNomeMetodo,  tagTipoMetodo,  tagParametroOperation,
-                         tagInputDinamico, tagOutputDinamico);
+                         tagInputDinamico, tagOutputDinamico, opLayout);
 
                 HTMLParser html = new HTMLParser();
                 html.recebeOperation(concatenaOperation);

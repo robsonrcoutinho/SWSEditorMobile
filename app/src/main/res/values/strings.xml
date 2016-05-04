@@ -10,7 +10,7 @@
     <string name="domain_ontology_remote">Domain Ontology</string>
 
     <!-- Descrição serviço -->
-    <string name="titulo_service">Service</string>
+    <string name="titulo_service">Nome Service</string>
     <string name="titulo_service_model">ModelReference service</string>
     <string name="description_service">Descrição</string>
     <string name="label_service">Label</string>
@@ -20,7 +20,7 @@
     <string name="titulo_address_obs">Descrição</string>
 
 
-    <!-- Operation-->
+    <!-- Operatio-->
     <string name="title_operation">Operation</string>
     <string name="nome_operation">Nome da Operação:</string>
     <string name="tipo_operation">Tipo Operação:</string>
