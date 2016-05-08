@@ -4,6 +4,7 @@ package br.com.ifba.swseditormobile.request;
  * Created by Robson on 17/01/2016.
  */
 import android.app.Application;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -11,7 +12,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 public class RequestWebApplication extends Application {
-    private static final String TAG = RequestWebApplication.class.getSimpleName();
+
+    @Override
+    public void onCreate(){
+        super.onCreate();
+        RequestManager.getInstance(getApplicationContext());
+    }
+
+
+/*
     private RequestQueue mRequestQueue;
 
     private static RequestWebApplication mInstance;
@@ -48,5 +57,5 @@ public class RequestWebApplication extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
-    }
+    }*/
 }

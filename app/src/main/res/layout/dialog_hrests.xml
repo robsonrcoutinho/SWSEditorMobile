@@ -44,7 +44,7 @@
             android:layout_height="28dp"
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
-            android:hint="@string/service_xml"
+            android:hint="@string/titulo_service_model"
             android:textColorHint="@android:color/darker_gray"
             android:textColor="@android:color/black"
             android:paddingLeft="5dp"

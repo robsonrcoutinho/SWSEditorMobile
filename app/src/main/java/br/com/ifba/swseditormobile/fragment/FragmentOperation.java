@@ -190,7 +190,7 @@ public class FragmentOperation extends DialogFragment {
                 }
 
                 concatenaOperation = "<div class=" + asp + "operation" + asp + "id=" + asp + "op1" + asp + ">"
-                        + "<h2>Operation:<code class=" + asp + "label" + asp + ">" + tagNomeMetodo + "</code></h2>"
+                        + "<h3>Operation:<code class=" + asp + "label" + asp + ">" + tagNomeMetodo + "</code></h3>"
                         + "<strong> Invoque usando:</strong> <span class=" + asp + "method" + asp + ">" + tagTipoMetodo + "</span> </BR>"
                         + selectRadioButton;
 
@@ -204,19 +204,15 @@ public class FragmentOperation extends DialogFragment {
 
             }
         });
-
-
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-
             }
         });
 
         return builder.create();
-
     }
 
     @Override

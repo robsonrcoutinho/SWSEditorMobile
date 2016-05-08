@@ -34,7 +34,6 @@ public class FragmentAddressTag extends DialogFragment {
         this.tagNameAddress = tagNameAddress;
         this.tagNameAddressObs = tagNameAddressObs;
     }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.tag_address_hrests, null);
@@ -61,15 +60,13 @@ public class FragmentAddressTag extends DialogFragment {
                 tagNameAddressObs = editAddressObs.getText().toString();
 
                 htmlTagAddressRecebida = "<span class="+asp+"address"+asp+">"+tagNameAddress+"</span>";
-                htmlTagAddressObsRecebida = "<p>"+tagNameAddressObs+"</p>";
+                htmlTagAddressObsRecebida = "<p><em>"+tagNameAddressObs+"</em></p>";
 
                 concatena = htmlTagAddressRecebida+htmlTagAddressObsRecebida;
                 HTMLParser html = new HTMLParser();
                 html.recebeAddress(concatena);
 
                mListener.onFragmentInteractionAddress(tagNameAddress,tagNameAddressObs);
-
-               // Log.d(TAG, "Concatena :: " + tagNameAddress);
 
             }
         });

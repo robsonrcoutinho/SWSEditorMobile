@@ -10,6 +10,8 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import br.com.ifba.swseditormobile.R;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 
@@ -34,10 +36,6 @@ public class FragmentServiceTag extends DialogFragment{
     private String htmlTagServiceLabel;
     private String htmlTagServiceDescription;
     private String concatenaService;
-
-
-    final String h1 = "<h1>";
-    final String h1f = "</h1>";
 
 
     public void recebeTagService(String modelReference, String tagNameService, String tagLabelService, String tagDescriptionService){
@@ -94,15 +92,17 @@ public class FragmentServiceTag extends DialogFragment{
                 tagDescriptionService = editDescricaoService.getText().toString();
 
                 htmlTagServiceRecebida = "<div class=" + asp + "service" + asp + " id =" + asp + "s1" + asp + ">"
-                        + h1 + tagNameService + h1f;
+                        + "<h3 align=\"center\">" + tagNameService + "</h3>";
                 htmlTagServiceLabel = "<span class="+ asp +"label"+ asp+">"+tagLabelService+"</span>";
-                htmlTagServiceDescription = "<p>"+tagDescriptionService+"</p>";
+                htmlTagServiceDescription = "<p><em>"+tagDescriptionService+"</em></p>";
 
                 concatenaService = htmlTagServiceRecebida+htmlTagServiceLabel+htmlTagServiceDescription+"</div>";
                 HTMLParser html = new HTMLParser();
                 html.recebeService(concatenaService);
 
-                mListener.onFragmentInteraction(modelReference,tagNameService, tagLabelService, tagDescriptionService);
+                mListener.onFragmentInteraction(modelReference, tagNameService, tagLabelService, tagDescriptionService);
+
+                Log.d(TAG,"Verificando serviço: "+concatenaService);
 
             }
         });
@@ -134,8 +134,3 @@ public class FragmentServiceTag extends DialogFragment{
 
 
 }
-
-
- /*Tratando serviceName*/
-// String quebraString = htmlTagRecebida.substring(htmlTagRecebida.indexOf(h1)+5, htmlTagRecebida.lastIndexOf(h1f));
-// String stringQuebradafinal = quebraString.substring(0,quebraString.indexOf("\""));
