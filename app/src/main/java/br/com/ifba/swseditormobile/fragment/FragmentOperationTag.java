@@ -21,8 +21,8 @@ import br.com.ifba.swseditormobile.util.HTMLParser;
 /**
  * Created by Robson on 25/04/2016.
  */
-public class FragmentOperation extends DialogFragment {
-    private static final String TAG = FragmentOperation.class.getSimpleName();
+public class FragmentOperationTag extends DialogFragment {
+    private static final String TAG = FragmentOperationTag.class.getSimpleName();
     private EditText edNomeMethod;
     private EditText edTipoMethod;
     private EditText edParametro;

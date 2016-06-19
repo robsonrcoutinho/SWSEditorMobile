@@ -1,10 +1,10 @@
 package br.com.ifba.swseditormobile.request;
 
 import android.content.Context;
-
+/*
 import com.android.volley.RequestTickle;
 import com.android.volley.toolbox.VolleyTickle;
-
+*/
 /**
  * Created by Robson on 05/05/2016.
  */
@@ -14,7 +14,7 @@ public class RequestManager {
 
 
     private RequestManager(Context context){
-        mRequestProxy = new RequestProxy(context);
+      //  mRequestProxy = new RequestProxy(context);
 
     }
 

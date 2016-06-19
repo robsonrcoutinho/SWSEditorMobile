@@ -6,13 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -31,29 +32,37 @@ import android.widget.ExpandableListView;
 import android.support.v7.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import com.android.volley.RequestQueue;
 import br.com.ifba.swseditormobile.fragment.EditorDetailFragment;
 import br.com.ifba.swseditormobile.fragment.FragmentAddressTag;
-import br.com.ifba.swseditormobile.fragment.FragmentOperation;
+import br.com.ifba.swseditormobile.fragment.FragmentOperationTag;
 import br.com.ifba.swseditormobile.fragment.FragmentServiceTag;
 import br.com.ifba.swseditormobile.fragment.IFragmentInteractionListener;
 import br.com.ifba.swseditormobile.fragment.PropertyListFragment;
 import br.com.ifba.swseditormobile.R;
 import br.com.ifba.swseditormobile.model.InputSemantico;
+import br.com.ifba.swseditormobile.model.Ontologias;
 import br.com.ifba.swseditormobile.model.OutputSemantico;
 import br.com.ifba.swseditormobile.model.ServiceSematico;
-import br.com.ifba.swseditormobile.request.RequestManager;
+import br.com.ifba.swseditormobile.realmDB.RealmController;
+import br.com.ifba.swseditormobile.realmDB.ScriptInsertOnto;
 import br.com.ifba.swseditormobile.model.ChildGrupo;
 import br.com.ifba.swseditormobile.model.Group;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 import br.com.ifba.swseditormobile.util.ToastManager;
 import br.com.ifba.swseditormobile.viewexpandable.CarregaObjetos;
 import br.com.ifba.swseditormobile.viewexpandable.ExpandableListAdapterView;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
         IFragmentInteractionListener, PropertyListFragment.Communicator, View.OnTouchListener, Handler.Callback {
+
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int CLICK_WV = 1;
@@ -112,6 +121,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private int opSemantic;
     private ProgressDialog dialog;
 
+    private RelativeLayout layoutOnLoco;
+    private RadioGroup rGroupBusca;
+    private int opRadio;
+
+    private Realm realm;
+    RealmResults<Ontologias> results;
+
+    public static final String REQUEST_TAG = "VolleyBlockingRequestActivity";
 
 
     @Override
@@ -124,8 +141,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         listaParam = new ArrayList();
         listaOut = new ArrayList();
 
-        dialog = new ProgressDialog(this);
+        this.realm = RealmController.with(this).getRealm();
+        RealmController.with(this).refresh();
 
+        /*Deletar todas as tuplas do banco*/
+        /*RealmController control = RealmController.getInstance();
+        control.clearAll();*/
+
+        setRealmData();
+
+        dialog = new ProgressDialog(this);
 
         titlePrincipalProperties = (TextView) findViewById(R.id.tvTitlePrincipalProperties);
 
@@ -147,6 +172,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         linearLayout03.setVisibility(View.GONE);
         btnVoltarLayout2 = (Button) findViewById(R.id.btnVoltarLayout2);
         btnFinaliza = (Button) findViewById(R.id.btnFinalizar);
+
+        layoutOnLoco = (RelativeLayout) findViewById(R.id.layoutOnLoco);
+        layoutOnLoco.setVisibility(View.GONE);
+        rGroupBusca = (RadioGroup) findViewById(R.id.radio_group_busca);
+
 
         btnGravarHrests = (ImageButton) findViewById(R.id.gravarDocumento);
         btnGravarHrests.setVisibility(View.GONE);
@@ -186,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     public void carregaExpandable(final String modelReference, final String serviceNomeTroca, final String labelServiceTroca,
                                   final String descriptionServiceTroca) {
+        layoutOnLoco.setVisibility(View.VISIBLE);
         btnGravarHrests.setVisibility(View.VISIBLE);
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
@@ -222,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         Log.d(TAG, "Testando PARAM ADRESS: " + addressUrl + addressObs);
                         break;
                     case "Operation":
-                        FragmentOperation operation = new FragmentOperation();
+                        FragmentOperationTag operation = new FragmentOperationTag();
                         operation.recebeOperation(tagNomeMetodo, tagTipoMetodo, tagParametroOperation,
                                 tagInputDinamico, tagOutputDinamico);
                         operation.show(getFragmentManager(), "Operation");
@@ -237,18 +268,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         btnGravarHrests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (!TextUtils.isEmpty(modelReference) && !TextUtils.isEmpty(serviceNomeTroca) && !TextUtils.isEmpty(labelServiceTroca) &&
+                if (!TextUtils.isEmpty(modelReference) && !TextUtils.isEmpty(serviceNomeTroca) && !TextUtils.isEmpty(labelServiceTroca) &&
                         !TextUtils.isEmpty(descriptionServiceTroca) && !TextUtils.isEmpty(addressUrl) && !TextUtils.isEmpty(addressObs) &&
                         !TextUtils.isEmpty(tagNomeMetodo) && !TextUtils.isEmpty(tagTipoMetodo)) {
 
-                expandList.setVisibility(View.GONE);
-                btnGravarHrests.setVisibility(View.GONE);
-                loadSpinnerService();
-            } else{
-                   ToastManager.show(getBaseContext(), "Atenção!! Todos os campos devem ser preenchidos..", ToastManager.WARNING);
-               }
-        }
-    });
+                    expandList.setVisibility(View.GONE);
+                    btnGravarHrests.setVisibility(View.GONE);
+                    loadSpinnerService();
+                } else {
+                    ToastManager.show(getBaseContext(), "Atenção!! Todos os campos devem ser preenchidos..", ToastManager.WARNING);
+                }
+            }
+        });
     }
 
     /*
@@ -282,6 +313,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String url) {
+        Calendar c = Calendar.getInstance();
+        System.out.println("TEMPO INICIO => "+c.getTimeInMillis());
+
         Log.i(TAG, ".onQueryTextSubmit()" + url);
         httpAddress = "http://" + url;
         addressUrl = httpAddress;
@@ -322,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
         webview.loadUrl(httpAddress);
+        System.out.println("TEMPO FINAL => " + c.getTimeInMillis());
         return false;
     }
 
@@ -424,19 +459,31 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         spinnerLowering = (Spinner) findViewById(R.id.idLoweringSchemaMapping);
         spinnerLifting = (Spinner) findViewById(R.id.idLiftingSchemaMapping);
 
-       lista = new ArrayList<>();
-       lista =  RequestManager.getInstance().doRequest().buscaVolleyPlus(modelReference);
+        lista = new ArrayList<>();
+        opRadio = rGroupBusca.getCheckedRadioButtonId();
+
+        if ( opRadio == R.id.radio_local) {
+            realm.beginTransaction();
+            lista = new ArrayList<>();
+            results = realm.where(Ontologias.class).findAll();
+            for (int i = 1; i < results.size(); i++) {
+                lista.add(results.get(i).getEndereco());
+            }
+            realm.commitTransaction();
+        }else{
+        //lista =  RequestManager.getInstance().doRequest().buscaVolleyPlus(modelReference);
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerModeRefence.setAdapter(adapter);
 
         ArrayAdapter<String> adapterLowering = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        adapterLowering.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerLowering.setAdapter(adapterLowering);
 
         ArrayAdapter<String> adapterLifting = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        adapterLifting.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerLifting.setAdapter(adapterLifting);
 
 
@@ -453,6 +500,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onItemSelected(AdapterView<?> parent, View v, int posicao, long id) {
                 serviceSematico.setLowering(parent.getSelectedItem().toString());
             }
+
             public void onNothingSelected(AdapterView<?> arg0) {
 
             }
@@ -462,6 +510,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onItemSelected(AdapterView<?> parent, View v, int posicao, long id) {
                 serviceSematico.setLifting(parent.getSelectedItem().toString());
             }
+
             public void onNothingSelected(AdapterView<?> arg0) {
 
             }
@@ -525,7 +574,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         spinnerLowering = (Spinner) findViewById(R.id.idParamLoweringSchemaMapping);
         spinnerLifting = (Spinner) findViewById(R.id.idParamLiftingSchemaMapping);
 
-        listaParam = RequestManager.getInstance().doRequest().buscaParamVolleyPlus(param);
+        //  listaParam = RequestManager.getInstance().doRequest().buscaParamVolleyPlus(param);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, listaParam);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -576,7 +625,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 @Override
                 public void onClick(View v) {
 
-                    HTMLParser htmlParser = new HTMLParser(serviceSematico,inputSemantico,outputSemantico);
+                    HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
                     ;// inputSemantico, outputSemantico, opSemantic);
 
                     Bundle params = new Bundle();
@@ -664,7 +713,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
 
 
-
         btnVoltarLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -677,7 +725,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         btnFinaliza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HTMLParser htmlParser = new HTMLParser(serviceSematico,inputSemantico,outputSemantico);
+                HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
 
                 Log.d(TAG, "Service Semantic" + serviceSematico.getModelReference().toString());
                 Log.d(TAG, "Service Semantic" + serviceSematico.getLowering().toString());
@@ -695,8 +743,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
     }
 
+    public void setRealmData() {
+        RealmResults<Ontologias> results = realm.where(Ontologias.class).findAll();
+        ArrayList<Ontologias> onts = new ArrayList<>();
 
+        onts = ScriptInsertOnto.ontos();
+
+        if (results.size() == 0) {
+            for (Ontologias b : onts) {
+                realm.beginTransaction();
+                realm.copyToRealm(b);
+                realm.commitTransaction();
+            }
+        }
     }
+}
+
+
 
 
 

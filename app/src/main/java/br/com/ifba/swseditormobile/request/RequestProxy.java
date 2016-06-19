@@ -7,11 +7,11 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
-import com.android.volley.RequestTickle;
+/*import com.android.volley.RequestTickle;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.android.volley.toolbox.VolleyTickle;
+import com.android.volley.toolbox.VolleyTickle;*/
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class RequestProxy {
     private static String TAG = RequestProxy.class.getSimpleName();
     private RequestQueue mRequestQueue;
-    private RequestTickle mRequestTickle;
+  /*  private RequestTickle mRequestTickle;
 
 
     public RequestProxy(Context context) {
@@ -104,7 +104,7 @@ public class RequestProxy {
             }
         }
         return lista;
-    }
+    }*/
 
 
 

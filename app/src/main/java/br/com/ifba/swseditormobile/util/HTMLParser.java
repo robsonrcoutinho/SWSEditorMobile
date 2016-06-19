@@ -1,8 +1,5 @@
 package br.com.ifba.swseditormobile.util;
 
-
-
-
 import android.util.Log;
 
 import org.jsoup.Jsoup;
@@ -112,15 +109,15 @@ public class HTMLParser {
     public void semanticService() {
         if (serviceSematico.getModelReference() != null && !serviceSematico.getModelReference().isEmpty()) {
             String modelReference = "<strong> ModelReference:</strong>" +
-                    " <a rel=" + asp + "model" + asp + " href=" + asp + serviceSematico.getModelReference().toString() + asp + ">" +
+                    " <a rel=" + asp + "model" + asp + " href=" + asp + serviceSematico.getModelReference().toString() + asp + ">" +" </br>"+
                     serviceSematico.getModelReference().toString() + "</a> </br>";
-            this.semanticOntologia += modelReference;
+            this.semanticOntologia = modelReference;
 
             Log.d(TAG, "Service Semantic" + serviceSematico.getModelReference().toString());
 
             if (serviceSematico.getLowering() != null && !serviceSematico.getLowering().isEmpty()) {
                 String lowering = "<strong> LoweringSchemaMapping:</strong>" +
-                        "<a rel=" + asp + "lowering" + asp + " href=" + asp + serviceSematico.getLowering().toString() + asp + ">" +
+                        "<a rel=" + asp + "lowering" + asp + " href=" + asp + serviceSematico.getLowering().toString() + asp + ">" +" </br>"+
                          serviceSematico.getLowering().toString()+"</a>  </br>";
                 semanticOntologia += lowering;
 
@@ -129,7 +126,7 @@ public class HTMLParser {
             }
             if(serviceSematico.getLifting()!= null && !serviceSematico.getLifting().isEmpty() ){
                 String lifting =  "<strong> LiftingSchemaMapping:</strong>"+
-                        "<a rel="+asp+"lifting"+asp+" href="+asp+ serviceSematico.getLifting().toString()+asp+">" +
+                        "<a rel="+asp+"lifting"+asp+" href="+asp+ serviceSematico.getLifting().toString()+asp+">" +" </br>"+
                          serviceSematico.getLifting().toString()+"</a>  </br>";
                 semanticOntologia+=lifting;
                 Log.d(TAG, "Service Semantic" + serviceSematico.getLifting().toString());

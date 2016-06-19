@@ -28,7 +28,7 @@ public class RenderView extends AppCompatActivity {
 
         String htmlRecebido = params.getString("html");
 
-        webview.loadData(htmlRecebido,null,null);
+        webview.loadData(htmlRecebido,"text/html; charset=UTF-8",null);
 
     }
 }
