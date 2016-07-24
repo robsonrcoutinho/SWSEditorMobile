@@ -1,17 +1,6 @@
 package br.com.ifba.swseditormobile.util;
 
 import android.util.Log;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import br.com.ifba.swseditormobile.model.InputSemantico;
 import br.com.ifba.swseditormobile.model.OutputSemantico;
 import br.com.ifba.swseditormobile.model.ServiceSematico;
@@ -22,7 +11,6 @@ import br.com.ifba.swseditormobile.model.ServiceSematico;
  */
 public class HTMLParser {
     private static final String TAG = HTMLParser.class.getSimpleName();
-    private static String response;
     private static String service;
     private static String address;
     private static String operation;
@@ -37,18 +25,18 @@ public class HTMLParser {
     private static final String asp = "\"";
 
     public HTMLParser(ServiceSematico service, InputSemantico inputSemantico, OutputSemantico outputSemantico ) {
-        if(service != null){
+        if (service != null) {
             this.serviceSematico = service;
-            semanticService();
-        }else if(inputSemantico != null){
-            this.inputSemantico = inputSemantico;
-            semanticInput();
-        }else if(outputSemantico != null){
-            this.outputSemantico = outputSemantico;
-            semanticOutput();
+            if (inputSemantico != null) {
+                this.inputSemantico = inputSemantico;
+                semanticInput();
+            }
+            if (outputSemantico != null) {
+                this.outputSemantico = outputSemantico;
+                semanticOutput();
+                semanticService();
+            }
         }
-
-
     }
 
     public HTMLParser() {
@@ -78,6 +66,7 @@ public class HTMLParser {
         html = html.concat(meioHtml);
         html = html.concat(address);
         html = html.concat(operation);
+
         if(semanticInput != null) {
             html = html.concat(semanticInput);
         }
@@ -133,14 +122,47 @@ public class HTMLParser {
             }
 
         }
+
+    }
+
+    private void semanticInput() {
+        if (inputSemantico.getModelReference() != null && !inputSemantico.getModelReference().isEmpty()) {
+            String modelReference = "<strong> Ontologias para Parametro de Entrada:</strong> <br>"+
+                    "<strong> ModelReference:</strong>" +
+                    " <a rel=" + asp + "model" + asp + " href=" + asp + inputSemantico.getModelReference().toString() + asp + ">" +
+                    inputSemantico.getModelReference().toString() + "</a> </br>";
+            this.semanticInput = modelReference;
+
+            Log.d(TAG, "inputSemantico Semantic" + inputSemantico.getModelReference().toString());
+
+            if (inputSemantico.getLowering() != null && !inputSemantico.getLowering().isEmpty()) {
+                String lowering = "<strong> LoweringSchemaMapping:</strong>" +
+                        "<a rel=" + asp + "lowering" + asp + " href=" + asp + inputSemantico.getLowering().toString() + asp + ">" +
+                        inputSemantico.getLowering().toString()+"</a>  </br>";
+                semanticInput += lowering;
+
+                Log.d(TAG, "inputSemantico Semantic" + inputSemantico.getLowering().toString());
+
+            }
+            if(inputSemantico.getLifting()!= null && !inputSemantico.getLifting().isEmpty() ){
+                String lifting =  "<strong> LiftingSchemaMapping:</strong>"+
+                        "<a rel="+asp+"lifting"+asp+" href="+asp+ inputSemantico.getLifting().toString()+asp+">" +
+                        inputSemantico.getLifting().toString()+"</a>  </br>";
+                semanticInput+=lifting;
+                Log.d(TAG, "inputSemantico Semantic" + inputSemantico.getLifting().toString());
+            }
+
+        }
+
     }
 
     private void semanticOutput() {
         if (outputSemantico.getModelReference() != null && !outputSemantico.getModelReference().isEmpty()) {
-            String modelReference = "<strong> ModelReference:</strong>" +
+            String modelReference = "<strong> Ontologias para Parametro de saida:</strong> <br>"+
+                    "<strong> ModelReference:</strong>" +
                     " <a rel=" + asp + "model" + asp + " href=" + asp + outputSemantico.getModelReference().toString() + asp + ">" +
                     outputSemantico.getModelReference().toString() + "</a> </br>";
-            this.semanticoutput += modelReference;
+            this.semanticoutput = modelReference;
 
             Log.d(TAG, "outputSemantico Semantic" + outputSemantico.getModelReference().toString());
 
@@ -168,33 +190,4 @@ public class HTMLParser {
 
     }
 
-    private void semanticInput() {
-        if (inputSemantico.getModelReference() != null && !inputSemantico.getModelReference().isEmpty()) {
-            String modelReference = "<strong> ModelReference:</strong>" +
-                    " <a rel=" + asp + "model" + asp + " href=" + asp + inputSemantico.getModelReference().toString() + asp + ">" +
-                    inputSemantico.getModelReference().toString() + "</a> </br>";
-            this.semanticInput += modelReference;
-
-            Log.d(TAG, "inputSemantico Semantic" + inputSemantico.getModelReference().toString());
-
-            if (inputSemantico.getLowering() != null && !inputSemantico.getLowering().isEmpty()) {
-                String lowering = "<strong> LoweringSchemaMapping:</strong>" +
-                        "<a rel=" + asp + "lowering" + asp + " href=" + asp + inputSemantico.getLowering().toString() + asp + ">" +
-                        inputSemantico.getLowering().toString()+"</a>  </br>";
-                semanticInput += lowering;
-
-                Log.d(TAG, "inputSemantico Semantic" + inputSemantico.getLowering().toString());
-
-            }
-            if(inputSemantico.getLifting()!= null && !inputSemantico.getLifting().isEmpty() ){
-                String lifting =  "<strong> LiftingSchemaMapping:</strong>"+
-                        "<a rel="+asp+"lifting"+asp+" href="+asp+ inputSemantico.getLifting().toString()+asp+">" +
-                        inputSemantico.getLifting().toString()+"</a>  </br>";
-                semanticInput+=lifting;
-                Log.d(TAG, "inputSemantico Semantic" + inputSemantico.getLifting().toString());
-            }
-
-        }
-
-    }
-}
+   }

@@ -6,14 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -36,7 +34,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.android.volley.RequestQueue;
 import br.com.ifba.swseditormobile.fragment.EditorDetailFragment;
 import br.com.ifba.swseditormobile.fragment.FragmentAddressTag;
 import br.com.ifba.swseditormobile.fragment.FragmentOperationTag;
@@ -52,6 +49,7 @@ import br.com.ifba.swseditormobile.realmDB.RealmController;
 import br.com.ifba.swseditormobile.realmDB.ScriptInsertOnto;
 import br.com.ifba.swseditormobile.model.ChildGrupo;
 import br.com.ifba.swseditormobile.model.Group;
+import br.com.ifba.swseditormobile.request.GetRequisicao;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 import br.com.ifba.swseditormobile.util.ToastManager;
 import br.com.ifba.swseditormobile.viewexpandable.CarregaObjetos;
@@ -61,7 +59,8 @@ import io.realm.RealmResults;
 
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
-        IFragmentInteractionListener, PropertyListFragment.Communicator, View.OnTouchListener, Handler.Callback {
+        IFragmentInteractionListener, PropertyListFragment.Communicator, View.OnTouchListener,
+        Handler.Callback {
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -119,16 +118,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private InputSemantico inputSemantico;
     private OutputSemantico outputSemantico;
     private int opSemantic;
-    private ProgressDialog dialog;
 
     private RelativeLayout layoutOnLoco;
     private RadioGroup rGroupBusca;
     private int opRadio;
 
     private Realm realm;
-    RealmResults<Ontologias> results;
+    private RealmResults<Ontologias> results;
 
-    public static final String REQUEST_TAG = "VolleyBlockingRequestActivity";
+    private GetRequisicao getRequisicao;
 
 
     @Override
@@ -141,16 +139,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         listaParam = new ArrayList();
         listaOut = new ArrayList();
 
+
         this.realm = RealmController.with(this).getRealm();
         RealmController.with(this).refresh();
+
 
         /*Deletar todas as tuplas do banco*/
         /*RealmController control = RealmController.getInstance();
         control.clearAll();*/
 
         setRealmData();
-
-        dialog = new ProgressDialog(this);
 
         titlePrincipalProperties = (TextView) findViewById(R.id.tvTitlePrincipalProperties);
 
@@ -196,6 +194,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -214,8 +214,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             detailfragment.setText(message);
     }
 
+
     public void carregaExpandable(final String modelReference, final String serviceNomeTroca, final String labelServiceTroca,
                                   final String descriptionServiceTroca) {
+
         layoutOnLoco.setVisibility(View.VISIBLE);
         btnGravarHrests.setVisibility(View.VISIBLE);
         listDataGroup = new ArrayList<>();
@@ -274,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                     expandList.setVisibility(View.GONE);
                     btnGravarHrests.setVisibility(View.GONE);
-                    loadSpinnerService();
+                    loadSpinnerService(modelReference);
                 } else {
                     ToastManager.show(getBaseContext(), "Atenção!! Todos os campos devem ser preenchidos..", ToastManager.WARNING);
                 }
@@ -307,16 +309,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String url) {
-        Log.i(TAG, ".onQueryTextChange()" + url);
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String url) {
-        Calendar c = Calendar.getInstance();
-        System.out.println("TEMPO INICIO => "+c.getTimeInMillis());
 
-        Log.i(TAG, ".onQueryTextSubmit()" + url);
         httpAddress = "http://" + url;
         addressUrl = httpAddress;
 
@@ -356,7 +354,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
         webview.loadUrl(httpAddress);
-        System.out.println("TEMPO FINAL => " + c.getTimeInMillis());
         return false;
     }
 
@@ -441,15 +438,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         this.opLayout = opLayout;
     }
 
-    public void loadSpinnerService() {
-
-        final ProgressDialog dialog =
-                new ProgressDialog(MainActivity.this);
-        dialog.setMessage("Buscando ... Aguarde...");
-        dialog.setIndeterminate(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
-        dialog.show();
+    public void loadSpinnerService(String modelReferenceBusca) {
 
         linearLayout01.setVisibility(View.VISIBLE);
         serviceSematico = new ServiceSematico();
@@ -460,18 +449,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         spinnerLifting = (Spinner) findViewById(R.id.idLiftingSchemaMapping);
 
         lista = new ArrayList<>();
+        lista.add("Selecione valor...");
+
         opRadio = rGroupBusca.getCheckedRadioButtonId();
 
-        if ( opRadio == R.id.radio_local) {
+        if (opRadio == R.id.radio_local){
             realm.beginTransaction();
-            lista = new ArrayList<>();
             results = realm.where(Ontologias.class).findAll();
             for (int i = 1; i < results.size(); i++) {
                 lista.add(results.get(i).getEndereco());
             }
             realm.commitTransaction();
         }else{
-        //lista =  RequestManager.getInstance().doRequest().buscaVolleyPlus(modelReference);
+             getRequisicao = (GetRequisicao) new GetRequisicao(MainActivity.this, new GetRequisicao.IParamsAsyncTask() {
+                 @Override
+                 public void processFinish(List<String> output) {
+                    for(int i =0; i<output.size(); i++){
+                        lista.add(output.get(i).toString());
+                        Log.d(TAG, "Lista: URL CONNECTION::" + output.get(i).toString() + ":" + " VALOR");
+                    }
+                 }
+             }).execute(modelReferenceBusca);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
@@ -491,7 +489,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onItemSelected(AdapterView<?> parent, View v, int posicao, long id) {
                 serviceSematico.setModelReference(parent.getSelectedItem().toString());
             }
-
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
@@ -537,6 +534,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 } else if (opLayout == 1) {
                     loadSpinnerParam(tagInputDinamico);
                 }
+                /*OBSERVÇÂO*/
                 Log.d(TAG, serviceSematico.getModelReference().toString());
                 Log.d(TAG, serviceSematico.getLowering().toString());
                 Log.d(TAG, serviceSematico.getLifting().toString());
@@ -544,19 +542,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
     }
 
-    /*
-    * Metodo loadSpinner Param
-    *
-    * **/
+
 
     public void loadSpinnerParam(String param) {
-        final ProgressDialog dialog =
-                new ProgressDialog(MainActivity.this);
-        dialog.setMessage("Buscando ... Aguarde...");
-        dialog.setIndeterminate(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
-        dialog.show();
 
         Log.d(TAG, "loadSpinnerParam()");
         inputSemantico = new InputSemantico();
@@ -565,7 +553,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             opSemantic = 1;
 
         } else if (opLayout == 1) {
-            titlePrincipalProperties.setText("Input");
+            titlePrincipalProperties.setText("Param Input");
             opSemantic = 0;
         }
 
@@ -574,7 +562,29 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         spinnerLowering = (Spinner) findViewById(R.id.idParamLoweringSchemaMapping);
         spinnerLifting = (Spinner) findViewById(R.id.idParamLiftingSchemaMapping);
 
-        //  listaParam = RequestManager.getInstance().doRequest().buscaParamVolleyPlus(param);
+        listaParam = new ArrayList<>();
+        listaParam.add("Selecione valor...");
+        /**/
+
+        if (opRadio == R.id.radio_local){
+            realm.beginTransaction();
+            results = realm.where(Ontologias.class).findAll();
+            for (int i = 1; i < results.size(); i++) {
+                listaParam.add(results.get(i).getEndereco());
+            }
+            realm.commitTransaction();
+        }else{
+            getRequisicao = (GetRequisicao) new GetRequisicao(MainActivity.this, new GetRequisicao.IParamsAsyncTask() {
+                @Override
+                public void processFinish(List<String> output) {
+                    for(int i =0; i<output.size(); i++){
+                        listaParam.add(output.get(i).toString());
+                        Log.d(TAG, "Lista Param: URL CONNECTION::" + output.get(i).toString() + ":" + " VALOR PARAM");
+                    }
+                }
+            }).execute(param);
+        }
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, listaParam);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -626,7 +636,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 public void onClick(View v) {
 
                     HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
-                    ;// inputSemantico, outputSemantico, opSemantic);
 
                     Bundle params = new Bundle();
                     String html = htmlParser.montaHTML();
@@ -634,7 +643,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     Intent intent = new Intent(MainActivity.this, RenderView.class);
                     intent.putExtras(params);
                     startActivity(intent);
-
+                    finish();
                     Log.d(TAG, html);
                 }
             });
@@ -670,6 +679,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         spinnerModeRefence = (Spinner) findViewById(R.id.idOutModelReference);
         spinnerLowering = (Spinner) findViewById(R.id.idOutLoweringSchemaMapping);
         spinnerLifting = (Spinner) findViewById(R.id.idOutLiftingSchemaMapping);
+        opRadio = rGroupBusca.getCheckedRadioButtonId();
+
+        listaOut = new ArrayList<>();
+
+        if (opRadio == R.id.radio_local){
+            realm.beginTransaction();
+            results = realm.where(Ontologias.class).findAll();
+            for (int i = 1; i < results.size(); i++) {
+                listaOut.add(results.get(i).getEndereco());
+            }
+            realm.commitTransaction();
+        }else{
+            getRequisicao = (GetRequisicao) new GetRequisicao(MainActivity.this, new GetRequisicao.IParamsAsyncTask() {
+                @Override
+                public void processFinish(List<String> output) {
+                    for(int i =0; i<output.size(); i++){
+                        listaOut.add(output.get(i).toString());
+                        Log.d(TAG, "Lista Param OUT: URL CONNECTION::" + output.get(i).toString() + ":" + " VALOR OUT");
+                    }
+                }
+            }).execute(param);
+        }
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, listaOut);
@@ -727,16 +758,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onClick(View v) {
                 HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
 
-                Log.d(TAG, "Service Semantic" + serviceSematico.getModelReference().toString());
-                Log.d(TAG, "Service Semantic" + serviceSematico.getLowering().toString());
-                Log.d(TAG, "Service Semantic" + serviceSematico.getLifting().toString());
-
                 Bundle params = new Bundle();
                 String html = htmlParser.montaHTML();
                 params.putSerializable("html", html);
                 Intent intent = new Intent(MainActivity.this, RenderView.class);
                 intent.putExtras(params);
                 startActivity(intent);
+                finish();
                 Log.d(TAG, html);
 
             }
@@ -757,6 +785,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
     }
+
+
 }
 
 

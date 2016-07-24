@@ -177,7 +177,8 @@ public class FragmentOperationTag extends DialogFragment {
                     Log.d("OUTPUT", " ");
                     selectRadioButton = "</BR>" +
                             "<span class=" + asp + "output" + asp + ">"
-                            + "<strong>Valor de Saida:</strong>" +tagParametroOperation + "</span>";
+                            + "<strong>Valor de Saida:</strong>" +tagParametroOperation + "</span>"
+                            +"<br/>";
                 } else if (op == R.id.radio_ambos) {
                     Log.d(TAG, "AMBOS");
                     selectRadioButton =
@@ -185,7 +186,8 @@ public class FragmentOperationTag extends DialogFragment {
                                     + "<strong>Parâmetros de entrada:</strong>"+ tagInputDinamico + "</span>"
                                     + "<br/>"
                                     +  "<span class=" + asp + "output" + asp + ">"
-                                    + "<strong>Valor de Saida:</strong>" + tagOutputDinamico + "</span>";
+                                    + "<strong>Valor de Saida:</strong>" + tagOutputDinamico + "</span>"
+                                    +"<br/>";;
                     opLayout = 1;
                 }
 
