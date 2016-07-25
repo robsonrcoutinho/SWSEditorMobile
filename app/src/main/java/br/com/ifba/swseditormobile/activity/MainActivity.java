@@ -682,6 +682,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         opRadio = rGroupBusca.getCheckedRadioButtonId();
 
         listaOut = new ArrayList<>();
+        listaOut.add("Selecione valor...");
 
         if (opRadio == R.id.radio_local){
             realm.beginTransaction();

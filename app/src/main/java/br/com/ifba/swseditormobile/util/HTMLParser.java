@@ -127,7 +127,8 @@ public class HTMLParser {
 
     private void semanticInput() {
         if (inputSemantico.getModelReference() != null && !inputSemantico.getModelReference().isEmpty()) {
-            String modelReference = "<strong> Ontologias para Parametro de Entrada:</strong> <br>"+
+            String modelReference = "<br><br>" +
+                    "<strong> Ontologias para Parametro de Entrada:</strong> <br>"+
                     "<strong> ModelReference:</strong>" +
                     " <a rel=" + asp + "model" + asp + " href=" + asp + inputSemantico.getModelReference().toString() + asp + ">" +
                     inputSemantico.getModelReference().toString() + "</a> </br>";
@@ -158,7 +159,8 @@ public class HTMLParser {
 
     private void semanticOutput() {
         if (outputSemantico.getModelReference() != null && !outputSemantico.getModelReference().isEmpty()) {
-            String modelReference = "<strong> Ontologias para Parametro de saida:</strong> <br>"+
+            String modelReference = "<br><br>" +
+                    "<strong> Ontologias para Parametro de saida:</strong> <br>"+
                     "<strong> ModelReference:</strong>" +
                     " <a rel=" + asp + "model" + asp + " href=" + asp + outputSemantico.getModelReference().toString() + asp + ">" +
                     outputSemantico.getModelReference().toString() + "</a> </br>";
