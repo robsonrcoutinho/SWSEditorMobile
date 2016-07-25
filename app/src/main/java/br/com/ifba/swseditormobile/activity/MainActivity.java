@@ -453,23 +453,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         opRadio = rGroupBusca.getCheckedRadioButtonId();
 
-        if (opRadio == R.id.radio_local){
+        if (opRadio == R.id.radio_local) {
             realm.beginTransaction();
             results = realm.where(Ontologias.class).findAll();
             for (int i = 1; i < results.size(); i++) {
                 lista.add(results.get(i).getEndereco());
             }
             realm.commitTransaction();
-        }else{
-             getRequisicao = (GetRequisicao) new GetRequisicao(MainActivity.this, new GetRequisicao.IParamsAsyncTask() {
-                 @Override
-                 public void processFinish(List<String> output) {
-                    for(int i =0; i<output.size(); i++){
+        } else {
+            getRequisicao = (GetRequisicao) new GetRequisicao(MainActivity.this, new GetRequisicao.IParamsAsyncTask() {
+                @Override
+                public void processFinish(List<String> output) {
+                    for (int i = 0; i < output.size(); i++) {
                         lista.add(output.get(i).toString());
                         Log.d(TAG, "Lista: URL CONNECTION::" + output.get(i).toString() + ":" + " VALOR");
                     }
-                 }
-             }).execute(modelReferenceBusca);
+                }
+            }).execute(modelReferenceBusca);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
@@ -528,16 +528,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         btnGravarOntologiasService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linearLayout01.setVisibility(View.GONE);
-                if (opLayout == 0) {
-                    loadSpinnerParam(tagParametroOperation);
-                } else if (opLayout == 1) {
-                    loadSpinnerParam(tagInputDinamico);
-                }
+                Log.d("Removendo: ", lista.get(0).toString());
+                lista.remove(0);
+                if (!serviceSematico.getModelReference().equals("Selecione valor...")) {
+                    linearLayout01.setVisibility(View.GONE);
+                    if (opLayout == 0) {
+                        loadSpinnerParam(tagParametroOperation);
+                    } else if (opLayout == 1) {
+                        loadSpinnerParam(tagInputDinamico);
+                    }
                 /*OBSERVÇÂO*/
-                Log.d(TAG, serviceSematico.getModelReference().toString());
-                Log.d(TAG, serviceSematico.getLowering().toString());
-                Log.d(TAG, serviceSematico.getLifting().toString());
+                    Log.d(TAG, serviceSematico.getModelReference().toString());
+                    Log.d(TAG, serviceSematico.getLowering().toString());
+                    Log.d(TAG, serviceSematico.getLifting().toString());
+                }
+                else{
+                    ToastManager.show(getBaseContext(), "Atenção!! Selecione ModelReference do Serviço..", ToastManager.WARNING);
+                }
             }
         });
     }
@@ -634,7 +641,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             btnContinuaParam.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    listaParam.remove(0);
 
+                    if(inputSemantico.getModelReference().equals("Selecione valor...")) {
+                        inputSemantico.setModelReference(null);
+                        inputSemantico.setLifting(null);
+                        inputSemantico.setLowering(null);
+                    }
                     HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
 
                     Bundle params = new Bundle();
@@ -757,6 +770,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         btnFinaliza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listaParam.remove(0);
+                if(outputSemantico.getModelReference().equals("Selecione valor...")) {
+                    outputSemantico.setModelReference(null);
+                    outputSemantico.setLifting(null);
+                    outputSemantico.setLowering(null);
+                }
+
                 HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
 
                 Bundle params = new Bundle();
@@ -786,6 +806,44 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
     }
+
+
+
+  /*  public void salvarOntos(){
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.dialog_hrests, null);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+
+        alert.setPositiveButton("Gravar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        for (Ontologias b : lista) {
+                            realm.beginTransaction();
+                            realm.copyToRealm(b);
+                            realm.commitTransaction();
+                        }
+
+                    }
+                }
+
+        );
+
+        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
+
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }
+
+        );
+        AlertDialog dialog = alert.create();
+        dialog.show();
+    }
+    }*/
 
 
 }
