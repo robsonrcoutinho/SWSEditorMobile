@@ -36,7 +36,7 @@ public class GetRequisicao extends AsyncTask<String, Void, List<String>> {
         Log.d("Novo Paramentro Busca: ", paramentro);
         String URLBusca ="http://watson.kmi.open.ac.uk/API/semanticcontent/keywords/?q=";
         URLBusca+=paramentro;
-        Log.d("URL FULL",URLBusca);
+
 
         List<String> listaParametros = new ArrayList<>();
 
@@ -45,17 +45,24 @@ public class GetRequisicao extends AsyncTask<String, Void, List<String>> {
             URL url = new URL(URLBusca);
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
+
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("Accept", "Application/json");
+            urlConnection.setRequestProperty("Content-Type", "multipart/form-data");
             urlConnection.setDoInput(true);
-            urlConnection.connect();
+
+
             InputStream is = urlConnection.getInputStream();
+
+
+            urlConnection.connect();
+
             if (is != null) {
+
                 StringBuilder sb = new StringBuilder();
                 String line;
                 try {
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(is));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                     while ((line = reader.readLine()) != null) {
                         sb.append(line);
                     }
@@ -65,7 +72,6 @@ public class GetRequisicao extends AsyncTask<String, Void, List<String>> {
                 }
 
                 results = sb.toString();
-                /**/
 
                 String[] posicao = null;
                 for (int i = 0; i < results.length(); i++) {
@@ -94,4 +100,4 @@ public class GetRequisicao extends AsyncTask<String, Void, List<String>> {
         progress.setMessage("Buscando...");
         progress.show();
     }
-    }
+}

@@ -145,10 +145,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
         /*Deletar todas as tuplas do banco*/
-        /*RealmController control = RealmController.getInstance();
+       /* RealmController control = RealmController.getInstance();
         control.clearAll();*/
 
-        setRealmData();
+       //  setRealmData();
 
         titlePrincipalProperties = (TextView) findViewById(R.id.tvTitlePrincipalProperties);
 
@@ -240,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                 switch (selecionado) {
                     case "Service":
-                        Log.d(TAG, "Switch entrou em: " + selecionado);
                         FragmentServiceTag dialogFragment = new FragmentServiceTag();
                         dialogFragment.recebeTagService(modelReference, serviceNomeTroca, labelServiceTroca,
                                 descriptionServiceTroca);
@@ -248,11 +247,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                         break;
                     case "Address":
-                        Log.d(TAG, "Switch entrou em: " + selecionado);
                         FragmentAddressTag fragmentAddressTag = new FragmentAddressTag();
                         fragmentAddressTag.recebeTagAddress(addressUrl, addressObs);
                         fragmentAddressTag.show(getFragmentManager(), "Address");
-                        Log.d(TAG, "Testando PARAM ADRESS: " + addressUrl + addressObs);
                         break;
                     case "Operation":
                         FragmentOperationTag operation = new FragmentOperationTag();
@@ -643,11 +640,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 public void onClick(View v) {
                     listaParam.remove(0);
 
-                    if(inputSemantico.getModelReference().equals("Selecione valor...")) {
+                   /* if(inputSemantico.getModelReference().equals("Selecione valor...")) {
                         inputSemantico.setModelReference(null);
                         inputSemantico.setLifting(null);
                         inputSemantico.setLowering(null);
-                    }
+                    }*/
+
+                    Log.d(TAG, serviceSematico.getModelReference().toString());
+                    Log.d(TAG, serviceSematico.getLowering().toString());
+                    Log.d(TAG, serviceSematico.getLifting().toString());
+
                     HTMLParser htmlParser = new HTMLParser(serviceSematico, inputSemantico, outputSemantico);
 
                     Bundle params = new Bundle();
@@ -797,12 +799,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ArrayList<Ontologias> onts = new ArrayList<>();
 
         onts = ScriptInsertOnto.ontos();
-
+        int i =0;
         if (results.size() == 0) {
             for (Ontologias b : onts) {
+                Log.d("Inserindo a: ", String.valueOf(i)) ;
                 realm.beginTransaction();
                 realm.copyToRealm(b);
                 realm.commitTransaction();
+                i++;
             }
         }
     }

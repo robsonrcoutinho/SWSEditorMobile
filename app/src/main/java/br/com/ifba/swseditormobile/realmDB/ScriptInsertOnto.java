@@ -1,8 +1,6 @@
 package br.com.ifba.swseditormobile.realmDB;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import br.com.ifba.swseditormobile.model.Ontologias;
 
 /**
@@ -62,17 +60,224 @@ public class ScriptInsertOnto {
 
         onto = new Ontologias();
         onto.setId(10 + System.currentTimeMillis());
-        onto.setEndereco("http://exemplo.ifba.com.br/data/friends.xsparql");
+        onto.setEndereco("http://exemplo.ifba.com.br/data/mensagem.xsparql");
         onts.add(onto);
 
         onto = new Ontologias();
         onto.setId(11 + System.currentTimeMillis());
-        onto.setEndereco("http://exemplo.ifba.com.br/data/friends.owl");
+        onto.setEndereco("http://exemplo.ifba.com.br/data/mensagem.owl");
         onts.add(onto);
 
         onto = new Ontologias();
         onto.setId(12 + System.currentTimeMillis());
-        onto.setEndereco("http://exemplo.ifba.com.br/data/friends.xslt");
+        onto.setEndereco("http://exemplo.ifba.com.br/data/mensagem.xslt");
+        onts.add(onto);
+    /*  */
+        onto = new Ontologias();
+        onto.setId(13 + System.currentTimeMillis());
+        onto.setEndereco("http://cvs.4suite.org/viewcvs/4Suite/Ft/Server/Share/Demos/BookerT/xbel");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(14 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/Category%3APerson?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(15 + System.currentTimeMillis());
+        onto.setEndereco("http://dmag.upf.es/ontologies/2001/12/ipronto.daml");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(16 + System.currentTimeMillis());
+        onto.setEndereco("http://dmag.upf.es/ontologies/2003/12/ipronto.owl");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(17 + System.currentTimeMillis());
+        onto.setEndereco(" http://cvs.4suite.org/viewcvs/4Suite/demos/4RDF/spamschema.rdfs?rev=1.2");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(18 + System.currentTimeMillis());
+        onto.setEndereco("http://www.csee.umbc.edu/~kolari1/ontologies/UserTrust.rdfs");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(19 + System.currentTimeMillis());
+        onto.setEndereco("http://schemas.talis.com/2005/dir/schema-20060627.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(20 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/METHONTOLOGY?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(21 + System.currentTimeMillis());
+        onto.setEndereco("http://www.daml.org/experiment/ontology/source-ont.daml");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(22 + System.currentTimeMillis());
+        onto.setEndereco("http://www.wasab.dk/morten/2004/02/wot.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(23 + System.currentTimeMillis());
+        onto.setEndereco("http://xmlns.com/wot/0.1/index.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(24 + System.currentTimeMillis());
+        onto.setEndereco("http://www.wasab.dk/morten/2004/02/wot.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(25 + System.currentTimeMillis());
+        onto.setEndereco("http://mged.sourceforge.net/ontologies/MGEDOntology.owl");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(26 + System.currentTimeMillis());
+        onto.setEndereco("http://simile.mit.edu/repository/ontologies/official/imsmd_educationalv1p2.rdfs");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(27 + System.currentTimeMillis());
+        onto.setEndereco("http://schemas.talis.com/2005/dir/schema-20060627.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(28 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/Ontology_Engineering_Methodology?xmlmime=rdfftss:///ccf/owl/Repository.owl");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(29 + System.currentTimeMillis());
+        onto.setEndereco("http://u2m.org/2003/02/UserModelOntology.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(30 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/METHONTOLOGY?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(31 + System.currentTimeMillis());
+        onto.setEndereco("http://simile.mit.edu/mediawiki/index.php/Special:ExportRDF/User_talk%3AMkbergman?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(32 + System.currentTimeMillis());
+        onto.setEndereco("http://dmag.upf.es/ontologies/2003/12/ipronto.owl");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(33 + System.currentTimeMillis());
+        onto.setEndereco("http://u2m.org/2003/02/UserModelOntology.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(34 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/ISWC2006?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(35 + System.currentTimeMillis());
+        onto.setEndereco("http://u2m.org/2003/02/UserModelOntology.rdf");
+        onts.add(onto);
+
+
+        onto = new Ontologias();
+        onto.setId(36 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/User_talk%3APigsonthewing?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(37 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/ISWC2006?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(38 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/ISWC2006?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(39 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/User_talk%3APigsonthewing?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(40 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/User_talk%3APigsonthewing?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(41 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/User_talk%3APigsonthewing?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(42 + System.currentTimeMillis());
+        onto.setEndereco("http://u2m.org/2003/02/UserModelOntology.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(43 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/User_talk%3APigsonthewing?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(44 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/ISWC2006?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(45 + System.currentTimeMillis());
+        onto.setEndereco("http://u2m.org/2003/02/UserModelOntology.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(46 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/ISWC2006?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(47 + System.currentTimeMillis());
+        onto.setEndereco("http://u2m.org/2003/02/UserModelOntology.rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(48 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/ISWC2006?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(49 + System.currentTimeMillis());
+        onto.setEndereco("http://ontoworld.org/index.php/Special:ExportRDF/User_talk%3AHideaki_Takeda?xmlmime=rdf");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(50 + System.currentTimeMillis());
+        onto.setEndereco("http://islab.hanyang.ac.kr/damls/User.damlhttp://mged.sourceforge.net/ontologies/MGEDOntology.daml");
+        onts.add(onto);
+
+
+        onto = new Ontologias();
+        onto.setId(51 + System.currentTimeMillis());
+        onto.setEndereco("http://exemplo.ifba.com.br/data/usuario.xsparql");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(52 + System.currentTimeMillis());
+        onto.setEndereco("http://exemplo.ifba.com.br/data/usuario.owl");
+        onts.add(onto);
+
+        onto = new Ontologias();
+        onto.setId(53 + System.currentTimeMillis());
+        onto.setEndereco("http://exemplo.ifba.com.br/data/usuario.xslt");
         onts.add(onto);
 
         return onts;

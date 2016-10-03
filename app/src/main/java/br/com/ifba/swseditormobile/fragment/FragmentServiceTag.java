@@ -10,8 +10,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import br.com.ifba.swseditormobile.R;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 

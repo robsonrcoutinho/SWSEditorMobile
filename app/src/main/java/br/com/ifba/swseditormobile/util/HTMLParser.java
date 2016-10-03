@@ -29,12 +29,13 @@ public class HTMLParser {
             this.serviceSematico = service;
             if (inputSemantico != null) {
                 this.inputSemantico = inputSemantico;
+                semanticService();
                 semanticInput();
             }
             if (outputSemantico != null) {
                 this.outputSemantico = outputSemantico;
-                semanticOutput();
                 semanticService();
+                semanticOutput();
             }
         }
     }
