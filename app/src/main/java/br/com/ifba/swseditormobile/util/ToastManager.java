@@ -1,7 +1,7 @@
 package br.com.ifba.swseditormobile.util;
 
 /**
- * Created by Robson on 30/03/2016.
+ * Created by #### on 30/03/2016.
  */
 
 import android.content.Context;

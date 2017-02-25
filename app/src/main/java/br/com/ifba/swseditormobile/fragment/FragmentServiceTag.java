@@ -14,7 +14,7 @@ import br.com.ifba.swseditormobile.R;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 
 /**
- * Created by Robson on 05/04/2016.
+ * Created by #### on 05/04/2016.
  */
 public class FragmentServiceTag extends DialogFragment{
     private static final String asp = "\"";

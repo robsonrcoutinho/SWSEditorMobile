@@ -1,7 +1,7 @@
 package br.com.ifba.swseditormobile.activity;
 
 /**
- * Created by Robson on 17/01/2016.
+ * Created by #### on 17/01/2016.
  */
 import android.app.Activity;
 import android.content.res.Configuration;

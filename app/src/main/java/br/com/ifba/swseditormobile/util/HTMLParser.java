@@ -7,7 +7,7 @@ import br.com.ifba.swseditormobile.model.ServiceSematico;
 
 
 /**
- * Created by Robson on 19/01/2016.
+ * Created by #### on 19/01/2016.
  */
 public class HTMLParser {
     private static final String TAG = HTMLParser.class.getSimpleName();

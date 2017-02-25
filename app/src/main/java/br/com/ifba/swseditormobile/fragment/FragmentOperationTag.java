@@ -19,7 +19,7 @@ import br.com.ifba.swseditormobile.R;
 import br.com.ifba.swseditormobile.util.HTMLParser;
 
 /**
- * Created by Robson on 25/04/2016.
+ * Created by #### on 25/04/2016.
  */
 public class FragmentOperationTag extends DialogFragment {
     private static final String TAG = FragmentOperationTag.class.getSimpleName();

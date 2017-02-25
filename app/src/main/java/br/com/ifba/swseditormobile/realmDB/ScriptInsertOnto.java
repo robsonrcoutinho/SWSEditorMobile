@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import br.com.ifba.swseditormobile.model.Ontologias;
 
 /**
- * Created by Robson on 06/06/2016.
+ * Created by #### on 06/06/2016.
  */
 public class ScriptInsertOnto {
 

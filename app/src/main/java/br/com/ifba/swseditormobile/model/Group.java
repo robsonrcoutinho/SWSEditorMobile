@@ -1,7 +1,7 @@
 package br.com.ifba.swseditormobile.model;
 
 /**
- * Created by Robson on 17/01/2016.
+ * Created by #### on 17/01/2016.
  */
 import java.util.ArrayList;
 

@@ -3,11 +3,6 @@ package br.com.ifba.swseditormobile.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * @Author Robson Coutinho
- * @Email r.ramoscoutinho@gmail.com
- * @Since 02, Setembro, 2016
- */
 public class PageHTML extends RealmObject{
     @PrimaryKey
     private Long id;

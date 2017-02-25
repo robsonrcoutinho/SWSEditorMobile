@@ -14,7 +14,7 @@ import br.com.ifba.swseditormobile.model.Group;
 
 
 /**
- * Created by Robson on 27/03/2016.
+ * Created by #### on 27/03/2016.
  */
 public class ExpandableListAdapterView extends BaseExpandableListAdapter {
 

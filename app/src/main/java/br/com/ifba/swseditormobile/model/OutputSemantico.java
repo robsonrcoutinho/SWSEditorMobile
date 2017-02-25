@@ -1,7 +1,7 @@
 package br.com.ifba.swseditormobile.model;
 
 /**
- * Created by Robson on 03/05/2016.
+ * Created by #### on 03/05/2016.
  */
 public class OutputSemantico {
     private String modelReference;
